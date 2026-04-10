@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf/dist/jspdf.es.min.js";
 import axios from "axios";
 import { useTheme } from "../ThemeContext";
+import { apiUrl } from "../config/api";
 
 interface User {
   id: string;
@@ -134,7 +135,7 @@ const Dashboard = () => {
 
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/applications", {
+      const res = await axios.get(apiUrl("/api/applications"), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -340,7 +341,7 @@ const Dashboard = () => {
 
       if (editingId) {
         await axios.put(
-          `http://localhost:5000/api/applications/${editingId}`,
+          apiUrl(`/api/applications/${editingId}`),
           payload,
           {
             headers: {
@@ -349,7 +350,7 @@ const Dashboard = () => {
           }
         );
       } else {
-        await axios.post("http://localhost:5000/api/applications", payload, {
+        await axios.post(apiUrl("/api/applications"), payload, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -378,7 +379,7 @@ const Dashboard = () => {
     if (!confirmDelete || !token) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/applications/${id}`, {
+      await axios.delete(apiUrl(`/api/applications/${id}`), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -401,7 +402,7 @@ const Dashboard = () => {
       setUpdatingStatusId(app._id);
 
       await axios.put(
-        `http://localhost:5000/api/applications/${app._id}`,
+        apiUrl(`/api/applications/${app._id}`),
         {
           company: app.company,
           role: app.role,
@@ -489,7 +490,7 @@ const Dashboard = () => {
       setCopiedPointIndex(null);
 
       const res = await axios.post(
-        "http://localhost:5000/api/ai/parse-jd",
+        apiUrl("/api/ai/parse-jd"),
         {
           jobDescription,
         },
