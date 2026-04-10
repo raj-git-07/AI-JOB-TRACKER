@@ -7,7 +7,6 @@ import applicationRoutes from "./routes/applicationRoutes";
 import aiRoutes from "./routes/aiRoutes";
 
 dotenv.config();
-connectDB();
 
 const app = express();
 
@@ -27,3 +26,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+void connectDB();
